@@ -4,11 +4,12 @@
   2) Operations of alu depends on a and b enables then a_op and b_op.
   3) ALU only operates when alu_en is high otherwise, the output is ignored.
   4) Asynchronous active low reset.
-  5) The testbench is executed using Synopsys VCS (DVE); however, due to confidentiality constraints, simulation results cannot be shared. Alternatively, a representative version will be provided via EDA Playground by using run.bash file
+  
 
 
 ## UVM Environment 
  Explained in Verification plan.
+ The testbench is executed using Synopsys VCS (DVE); however, due to confidentiality constraints, simulation results cannot be shared. Alternatively, a representative version will be provided via EDA Playground by using run.bash file
 
 
 ## TESTBENCH Architecture 
@@ -28,7 +29,7 @@
 
 
 ## Coverage 
-In coverage reports file 
+In the coverage reports file.
 Note: line coverage isn't fully covered as toggling reset from 0 to 1, default branch, toggling of alu_en are not covered and i just excluded all of it from coverage using DVE as its that important to be covered
 
 
