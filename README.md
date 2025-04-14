@@ -1,6 +1,6 @@
 # Verification-of-ALU-by-UVM
 ## Design specs of an  ALU
-  1) Inputs A and B signed as well as the output C.
+  1) Inputs A and B are signed data as well as the output C.
   2) Operations of alu depends on a and b enables then a_op and b_op.
   3) ALU only operates when alu_en is high otherwise, the output is ignored.
   4) Asynchronous active low reset.
