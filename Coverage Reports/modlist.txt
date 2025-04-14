@@ -1,0 +1,16 @@
+Design Module List
+
+Total Module Definition Coverage Summary 
+SCORE  LINE   COND   TOGGLE FSM    BRANCH ASSERT 
+ 88.58  94.44  77.78  96.21 --      85.00  89.47 
+
+
+Total modules in report: 5
+-------------------------------------------------------------------------------
+SCORE  LINE   COND   TOGGLE FSM    BRANCH ASSERT NAME                                                       
+  0.00 --     --     --     --     --       0.00 uvm_pkg                                                    
+ 87.50 100.00 --      75.00 --     --     --     tb_top                                                     
+ 88.04  92.00  77.78  97.37 --      85.00 --     ALU                                                        
+ 98.08 --     --      96.15 --     --     100.00 alu_intf                                                   
+100.00 --     --     --     --     --     100.00 \$unit::/apps/vcsmx/vcs/U-2023.03-SP2//etc/uvm/uvm_pkg.sv  
+
