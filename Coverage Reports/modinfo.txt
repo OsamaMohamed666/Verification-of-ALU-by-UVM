@@ -1,0 +1,588 @@
+===============================================================================
+Module : uvm_pkg
+===============================================================================
+SCORE  LINE   COND   TOGGLE FSM    BRANCH ASSERT 
+  0.00 --     --     --     --     --       0.00 
+
+Source File(s) : 
+
+/apps/vcsmx/vcs/U-2023.03-SP2//etc/uvm/uvm_pkg.sv
+
+Module self-instances :
+
+SCORE LINE COND TOGGLE FSM BRANCH ASSERT NAME 
+
+
+
+-------------------------------------------------------------------------------
+Assert Coverage for Module : uvm_pkg
+                 Total Attempted Percent Succeeded/Matched Percent 
+Assertions       2     0         0.00    0                 0.00    
+Cover properties 0     0                 0                         
+Cover sequences  0     0                 0                         
+Total            2     0         0.00    0                 0.00    
+
+
+
+-------------------------------------------------------------------------------
+
+Assertion Details
+
+Name                                            Attempts Real Successes Failures Incomplete 
+\uvm_reg_map::do_read .unnamed$$_0.unnamed$$_1  0        0              0        0          
+\uvm_reg_map::do_write .unnamed$$_0.unnamed$$_1 0        0              0        0          
+
+
+===============================================================================
+Module : tb_top
+===============================================================================
+SCORE  LINE   COND   TOGGLE FSM    BRANCH ASSERT 
+ 87.50 100.00 --      75.00 --     --     --     
+
+Source File(s) : 
+
+/home/runner/testbench.sv
+
+Module self-instances :
+
+SCORE  LINE   COND   TOGGLE FSM    BRANCH ASSERT NAME   
+ 87.50 100.00 --      75.00 --     --     --     tb_top 
+
+
+
+-------------------------------------------------------------------------------
+Line Coverage for Module : tb_top
+
+             Line No.   Total   Covered  Percent
+TOTAL                       11       11   100.00
+ALWAYS             10        2        2   100.00
+INITIAL            13        5        5   100.00
+INITIAL            36        3        3   100.00
+INITIAL            42        1        1   100.00
+
+9                         bit reset;
+10         2/2            always #5 clk = ~clk;
+11                        
+12                        initial begin
+13         1/1              clk = 0;
+14         1/1              reset = 0;
+15         2/2              #5; 
+16         1/1              reset = 1;
+17                        end
+18                        alu_intf vif(clk, reset);
+19                        
+20                       ALU dut(  
+21                      .clk(clk),
+22                         .rst_n(reset),
+23                         .ALU_en(vif.ALU_en),
+24                         .A(vif.A),
+25                         .B(vif.B),
+26                         .b_op(vif.b_op),
+27                         .b_en(vif.b_en),
+28                         .a_en(vif.a_en),
+29                         .a_op(vif.a_op),
+30                         .C(vif.C)
+31                      );
+32                      
+33                        
+34                        initial begin
+35                          // set interface in config_db
+36         1/1              uvm_config_db#(virtual alu_intf)::set(uvm_root::get(), "*", "vif", vif);
+37                          // Dump waves
+38         1/1              $dumpfile("dump.vcd");
+39         1/1              $dumpvars;
+40                        end
+41                        initial begin
+42         1/1              run_test("alu_test");
+
+-------------------------------------------------------------------------------
+Toggle Coverage for Module : tb_top
+                Total Covered Percent 
+Totals          2     1       50.00   
+Total Bits      4     3       75.00   
+Total Bits 0->1 2     2       100.00  
+Total Bits 1->0 2     1       50.00   
+
+                            
+Signals          2 1 50.00  
+Signal Bits      4 3 75.00  
+Signal Bits 0->1 2 2 100.00 
+Signal Bits 1->0 2 1 50.00  
+
+Signal Details
+      Toggle Toggle 1->0 Toggle 0->1 
+clk   Yes    Yes         Yes         
+reset No     No          Yes         
+
+
+-------------------------------------------------------------------------------
+===============================================================================
+Module Instance : tb_top
+===============================================================================
+
+Instance :
+
+SCORE  LINE   COND   TOGGLE FSM    BRANCH ASSERT 
+ 87.50 100.00 --      75.00 --     --     --     
+
+
+Instance's subtree :
+
+SCORE  LINE   COND   TOGGLE FSM    BRANCH ASSERT 
+ 90.69  94.44  77.78  96.21 --      85.00 100.00 
+
+
+Module : 
+
+SCORE  LINE   COND   TOGGLE FSM    BRANCH ASSERT NAME   
+ 87.50 100.00 --      75.00 --     --     --     tb_top 
+
+
+Parent : 
+
+none
+----------------
+
+
+Subtrees :
+
+SCORE  LINE   COND   TOGGLE FSM    BRANCH ASSERT NAME 
+ 88.04  92.00  77.78  97.37 --      85.00 --     dut  
+ 98.08 --     --      96.15 --     --     100.00 vif  
+
+
+
+-------------------------------------------------------------------------------
+Since this is the module's only instance, the coverage report is the same as for the module.
+===============================================================================
+Module : ALU
+===============================================================================
+SCORE  LINE   COND   TOGGLE FSM    BRANCH ASSERT 
+ 88.04  92.00  77.78  97.37 --      85.00 --     
+
+Source File(s) : 
+
+/home/runner/design.sv
+
+Module self-instances :
+
+SCORE  LINE   COND   TOGGLE FSM    BRANCH ASSERT NAME       
+ 88.04  92.00  77.78  97.37 --      85.00 --     tb_top.dut 
+
+
+
+-------------------------------------------------------------------------------
+Line Coverage for Module : ALU
+
+             Line No.   Total   Covered  Percent
+TOTAL                       25       23    92.00
+ALWAYS             19       25       23    92.00
+
+18                      always_ff @(posedge clk or negedge rst_n) begin 
+19         1/1          	if(!rst_n)
+20         1/1          		C<=0;
+21         1/1          	else if (ALU_en) begin
+22         1/1          		if (b_en && a_en) begin
+23         1/1          		case(b_op)
+24         1/1          			2'b00	:	C<= ~(a_ext | b_ext);
+25         1/1          			2'b01	:	C<= a_ext ~^ b_ext;
+26         1/1          			2'b10	:	C<= a_ext - 1'b1;
+27         1/1          			2'b11	:	C<= b_ext + 2'b10;
+                   ==>  MISSING_DEFAULT
+28                      			endcase 
+29                      		end
+30         1/1          		else if (a_en && !b_en) begin
+31         1/1          			case(a_op) 
+32         1/1          			3'b000	:	C<= a_ext+b_ext;
+33         1/1          			3'b001	:	C<= a_ext-b_ext;
+34         1/1          			3'b010	:	C<= a_ext^b_ext;
+35         1/1          			3'b011	:	C<= a_ext&b_ext;
+36         1/1          			3'b100	:	C<= a_ext& b_ext;
+37         1/1          			3'b101	:	C<= a_ext|b_ext;
+38         1/1          			3'b110	:	C<= a_ext ~^ b_ext;
+39         0/1     ==>              default : 	C<=0;
+40                      			endcase
+41                      		end
+42         1/1          		else if (b_en && !a_en) begin 
+43         1/1          			case(b_op)
+44         1/1          			2'b00	:	C<= ~(a_ext & b_ext);
+45         1/1          			2'b01	:	C<= a_ext + b_ext;
+46         1/1          			2'b10	:	C<= a_ext + b_ext;
+47         0/1     ==>              default	:   C<= 0;
+48                      			endcase 
+49                      		end 
+                        MISSING_ELSE
+50                      	end 
+                        MISSING_ELSE
+
+-------------------------------------------------------------------------------
+Cond Coverage for Module : ALU
+
+               Total   Covered  Percent
+Conditions          9        7    77.78
+Logical             9        7    77.78
+Non-Logical         0        0
+Event               0        0
+
+ LINE       22
+ EXPRESSION (b_en && a_en)
+             --1-    --2-
+
+-1- -2- Status
+ 0   1  Covered
+ 1   0  Covered
+ 1   1  Covered
+
+ LINE       30
+ EXPRESSION (a_en && ((!b_en)))
+             --1-    ----2----
+
+-1- -2- Status
+ 0   1  Covered
+ 1   0  Not Covered
+ 1   1  Covered
+
+ LINE       42
+ EXPRESSION (b_en && ((!a_en)))
+             --1-    ----2----
+
+-1- -2- Status
+ 0   1  Covered
+ 1   0  Not Covered
+ 1   1  Covered
+
+-------------------------------------------------------------------------------
+Toggle Coverage for Module : ALU
+                Total Covered Percent 
+Totals          12    10      83.33   
+Total Bits      76    74      97.37   
+Total Bits 0->1 38    38      100.00  
+Total Bits 1->0 38    36      94.74   
+
+                            
+Ports          10 8  80.00  
+Port Bits      52 50 96.15  
+Port Bits 0->1 26 26 100.00 
+Port Bits 1->0 26 24 92.31  
+
+                              
+Signals          2  2  100.00 
+Signal Bits      24 24 100.00 
+Signal Bits 0->1 12 12 100.00 
+Signal Bits 1->0 12 12 100.00 
+
+Port Details
+          Toggle Toggle 1->0 Toggle 0->1 Direction 
+clk       Yes    Yes         Yes         INPUT     
+rst_n     No     No          Yes         INPUT     
+ALU_en    No     No          Yes         INPUT     
+a_en      Yes    Yes         Yes         INPUT     
+b_en      Yes    Yes         Yes         INPUT     
+a_op[2:0] Yes    Yes         Yes         INPUT     
+b_op[1:0] Yes    Yes         Yes         INPUT     
+A[4:0]    Yes    Yes         Yes         INPUT     
+B[4:0]    Yes    Yes         Yes         INPUT     
+C[5:0]    Yes    Yes         Yes         OUTPUT    
+
+Signal Details
+           Toggle Toggle 1->0 Toggle 0->1 
+a_ext[5:0] Yes    Yes         Yes         
+b_ext[5:0] Yes    Yes         Yes         
+
+
+-------------------------------------------------------------------------------
+Branch Coverage for Module : ALU
+         Line No. Total Covered Percent 
+Branches          20    17      85.00   
+IF       19       20    17      85.00   
+
+
+19         	if(!rst_n)
+           	-1-  
+20         		C<=0;
+           		==>
+21         	else if (ALU_en) begin
+           	     -2-  
+22         		if (b_en && a_en) begin
+           		-3-  
+23         		case(b_op)
+           		-4-  
+24         			2'b00	:	C<= ~(a_ext | b_ext);
+           			==>
+25         			2'b01	:	C<= a_ext ~^ b_ext;
+           			==>
+26         			2'b10	:	C<= a_ext - 1'b1;
+           			==>
+27         			2'b11	:	C<= b_ext + 2'b10;
+           			==>
+           			MISSING_DEFAULT
+           			==>
+28         			endcase 
+29         		end
+30         		else if (a_en && !b_en) begin
+           		     -5-  
+31         			case(a_op) 
+           			-6-  
+32         			3'b000	:	C<= a_ext+b_ext;
+           			==>
+33         			3'b001	:	C<= a_ext-b_ext;
+           			==>
+34         			3'b010	:	C<= a_ext^b_ext;
+           			==>
+35         			3'b011	:	C<= a_ext&b_ext;
+           			==>
+36         			3'b100	:	C<= a_ext& b_ext;
+           			==>
+37         			3'b101	:	C<= a_ext|b_ext;
+           			==>
+38         			3'b110	:	C<= a_ext ~^ b_ext;
+           			==>
+39                     default : 	C<=0;
+                       ==>
+40         			endcase
+41         		end
+42         		else if (b_en && !a_en) begin 
+           		     -7-  
+43         			case(b_op)
+           			-8-  
+44         			2'b00	:	C<= ~(a_ext & b_ext);
+           			==>
+45         			2'b01	:	C<= a_ext + b_ext;
+           			==>
+46         			2'b10	:	C<= a_ext + b_ext;
+           			==>
+47                     default	:   C<= 0;
+                       ==>
+48         			endcase 
+49         		end 
+           		MISSING_ELSE
+           		==>
+50         	end 
+           	MISSING_ELSE
+           	==>
+
+Branches:
+
+-1- -2- -3- -4-             -5- -6-     -7- -8-     Status      
+1   -   -   -               -   -       -   -       Covered     
+0   1   1   2'b00           -   -       -   -       Covered     
+0   1   1   2'b01           -   -       -   -       Covered     
+0   1   1   2'b10           -   -       -   -       Covered     
+0   1   1   2'b11           -   -       -   -       Covered     
+0   1   1   MISSING_DEFAULT -   -       -   -       Not Covered 
+0   1   0   -               1   3'b000  -   -       Covered     
+0   1   0   -               1   3'b001  -   -       Covered     
+0   1   0   -               1   3'b010  -   -       Covered     
+0   1   0   -               1   3'b011  -   -       Covered     
+0   1   0   -               1   3'b100  -   -       Covered     
+0   1   0   -               1   3'b101  -   -       Covered     
+0   1   0   -               1   3'b110  -   -       Covered     
+0   1   0   -               1   default -   -       Not Covered 
+0   1   0   -               0   -       1   2'b00   Covered     
+0   1   0   -               0   -       1   2'b01   Covered     
+0   1   0   -               0   -       1   2'b10   Covered     
+0   1   0   -               0   -       1   default Not Covered 
+0   1   0   -               0   -       0   -       Covered     
+0   0   -   -               -   -       -   -       Covered     
+
+
+-------------------------------------------------------------------------------
+===============================================================================
+Module Instance : tb_top.dut
+===============================================================================
+
+Instance :
+
+SCORE  LINE   COND   TOGGLE FSM    BRANCH ASSERT 
+ 88.04  92.00  77.78  97.37 --      85.00 --     
+
+
+Instance's subtree :
+
+SCORE  LINE   COND   TOGGLE FSM    BRANCH ASSERT 
+ 88.04  92.00  77.78  97.37 --      85.00 --     
+
+
+Module : 
+
+SCORE  LINE   COND   TOGGLE FSM    BRANCH ASSERT NAME 
+ 88.04  92.00  77.78  97.37 --      85.00 --     ALU  
+
+
+Parent : 
+
+SCORE  LINE   COND   TOGGLE FSM    BRANCH ASSERT NAME   
+ 87.50 100.00 --      75.00 --     --     --     tb_top 
+
+
+Subtrees :
+
+
+no children
+----------------
+
+
+-------------------------------------------------------------------------------
+Since this is the module's only instance, the coverage report is the same as for the module.
+===============================================================================
+Module : alu_intf
+===============================================================================
+SCORE  LINE   COND   TOGGLE FSM    BRANCH ASSERT 
+ 98.08 --     --      96.15 --     --     100.00 
+
+Source File(s) : 
+
+/home/runner/alu_intf.sv
+
+Module self-instances :
+
+SCORE  LINE   COND   TOGGLE FSM    BRANCH ASSERT NAME       
+ 98.08 --     --      96.15 --     --     100.00 tb_top.vif 
+
+
+
+-------------------------------------------------------------------------------
+Toggle Coverage for Module : alu_intf
+                Total Covered Percent 
+Totals          10    8       80.00   
+Total Bits      52    50      96.15   
+Total Bits 0->1 26    26      100.00  
+Total Bits 1->0 26    24      92.31   
+
+                          
+Ports          2 1 50.00  
+Port Bits      4 3 75.00  
+Port Bits 0->1 2 2 100.00 
+Port Bits 1->0 2 1 50.00  
+
+                              
+Signals          8  7  87.50  
+Signal Bits      48 47 97.92  
+Signal Bits 0->1 24 24 100.00 
+Signal Bits 1->0 24 23 95.83  
+
+Port Details
+      Toggle Toggle 1->0 Toggle 0->1 Direction 
+clk   Yes    Yes         Yes         INPUT     
+rst_n No     No          Yes         INPUT     
+
+Signal Details
+          Toggle Toggle 1->0 Toggle 0->1 
+A[4:0]    Yes    Yes         Yes         
+B[4:0]    Yes    Yes         Yes         
+ALU_en    No     No          Yes         
+a_en      Yes    Yes         Yes         
+a_op[2:0] Yes    Yes         Yes         
+b_en      Yes    Yes         Yes         
+b_op[1:0] Yes    Yes         Yes         
+C[5:0]    Yes    Yes         Yes         
+
+
+-------------------------------------------------------------------------------
+Assert Coverage for Module : alu_intf
+                 Total Attempted Percent Succeeded/Matched Percent 
+Assertions       8     8         100.00  8                 100.00  
+Cover properties 8     8         100.00  8                 100.00  
+Cover sequences  0     0                 0                         
+Total            16    16        100.00  16                100.00  
+
+
+
+-------------------------------------------------------------------------------
+
+Assertion Details
+
+Name        Attempts Real Successes Failures Incomplete 
+unnamed$$_0 1009     1              0        0          
+unnamed$$_1 1009     1009           0        0          
+unnamed$$_2 1009     264            0        0          
+unnamed$$_3 1009     1007           0        0          
+unnamed$$_4 1009     1009           0        0          
+unnamed$$_5 1009     184            0        0          
+unnamed$$_6 1009     1007           0        0          
+unnamed$$_7 1009     1007           0        0          
+
+
+-------------------------------------------------------------------------------
+
+Cover Directives for Properties: Details
+
+Name                Attempts Matches Incomplete 
+A_RANGE             1009     1007    0          
+B_RANGE             1009     1007    0          
+ILLEGAL_A_OPERATION 1009     1009    0          
+ILLEGAL_B_OPERATION 1009     184     0          
+OUTPUT_RANGE        1009     1007    0          
+OUTPUT_STABLE       1009     264     0          
+OUTPUT_VALIDATION   1009     1009    0          
+RESET_CHECKING      1009     1       0          
+
+
+-------------------------------------------------------------------------------
+===============================================================================
+Module Instance : tb_top.vif
+===============================================================================
+
+Instance :
+
+SCORE  LINE   COND   TOGGLE FSM    BRANCH ASSERT 
+ 98.08 --     --      96.15 --     --     100.00 
+
+
+Instance's subtree :
+
+SCORE  LINE   COND   TOGGLE FSM    BRANCH ASSERT 
+ 98.08 --     --      96.15 --     --     100.00 
+
+
+Module : 
+
+SCORE  LINE   COND   TOGGLE FSM    BRANCH ASSERT NAME     
+ 98.08 --     --      96.15 --     --     100.00 alu_intf 
+
+
+Parent : 
+
+SCORE  LINE   COND   TOGGLE FSM    BRANCH ASSERT NAME   
+ 87.50 100.00 --      75.00 --     --     --     tb_top 
+
+
+Subtrees :
+
+
+no children
+----------------
+
+
+-------------------------------------------------------------------------------
+Since this is the module's only instance, the coverage report is the same as for the module.
+===============================================================================
+Module : \$unit::/apps/vcsmx/vcs/U-2023.03-SP2//etc/uvm/uvm_pkg.sv 
+===============================================================================
+SCORE  LINE   COND   TOGGLE FSM    BRANCH ASSERT 
+100.00 --     --     --     --     --     100.00 
+
+Module self-instances :
+
+SCORE LINE COND TOGGLE FSM BRANCH ASSERT NAME 
+
+
+
+-------------------------------------------------------------------------------
+Assert Coverage for Module : \$unit::/apps/vcsmx/vcs/U-2023.03-SP2//etc/uvm/uvm_pkg.sv 
+                 Total Attempted Percent Succeeded/Matched Percent 
+Assertions       1     1         100.00  1                 100.00  
+Cover properties 0     0                 0                         
+Cover sequences  0     0                 0                         
+Total            1     1         100.00  1                 100.00  
+
+
+
+-------------------------------------------------------------------------------
+
+Assertion Details
+
+Name                         Attempts Real Successes Failures Incomplete 
+\base_seq::body .unnamed$$_0 500      500            0        0          
+
+

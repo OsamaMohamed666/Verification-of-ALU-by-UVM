@@ -1,0 +1,33 @@
+Dashboard
+
+Date: Sun Apr 13 23:20:00 2025
+
+User: unknown
+
+Version: U-2023.03-SP2
+Command line: urg -dir simv.vdb -format both
+Number of tests: 1
+
+-------------------------------------------------------------------------------
+Total Coverage Summary 
+SCORE  LINE   COND   TOGGLE FSM    BRANCH ASSERT GROUP  
+ 92.24  94.44  77.78  96.21 --      85.00 100.00 100.00 
+
+
+-------------------------------------------------------------------------------
+Hierarchical coverage data for top-level instances 
+SCORE  LINE   COND   TOGGLE FSM    BRANCH ASSERT NAME   
+ 90.69  94.44  77.78  96.21 --      85.00 100.00 tb_top 
+
+
+-------------------------------------------------------------------------------
+Total Module Definition Coverage Summary 
+SCORE  LINE   COND   TOGGLE FSM    BRANCH ASSERT 
+ 88.58  94.44  77.78  96.21 --      85.00  89.47 
+
+
+-------------------------------------------------------------------------------
+Total Groups Coverage Summary 
+SCORE  WEIGHT 
+100.00 1      
+
