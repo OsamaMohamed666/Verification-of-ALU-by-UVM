@@ -1,4 +1,4 @@
-# Verification-of-ALU-by-UVM
+# Verification-of-ALU-by-UVM-Supervised by SI-VISION Verification Academy
 ## Design specs of an  ALU
   1) Inputs A and B are signed data as well as the output C.
   2) Operations of alu depends on a and b enables then a_op and b_op.
